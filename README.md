@@ -4,5 +4,10 @@ cleanit is a shell script written to clean up your mess. With cleanit, you can c
 
 ## How to use cleanit
 
-1. Add cleanit to `/usr/local/bin`
-2. Run `cleanit` in the directory you want to clean up.
+```sh
+$ cp cleanit /usr/local/bin
+$ cd DirtyDir
+$ cleanit
+```
+
+*Feel free to add more extensions in the source code.*
