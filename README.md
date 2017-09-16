@@ -10,4 +10,7 @@ $ cd DirtyDir
 $ cleanit
 ```
 
+![alt text](https://github.com/3minus1/cleanit/raw/master/screenshot.png "Screenshot")
+
+
 *Feel free to add more extensions in the source code.*
