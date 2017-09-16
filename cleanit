@@ -1,0 +1,174 @@
+#! /bin/bash
+
+
+
+red="\033[1;31m"
+green="\033[0;32m"
+blue="\033[0;34m"
+cyan="\033[0;36m"
+yellow="\033[0;33m"
+disable_color="\033[0m"
+
+
+
+    cleanup()
+    {
+
+      DIRECTORY=$1
+      FILE=$2
+
+
+      echo -e "Storing in ${yellow}$DIRECTORY${disable_color}"
+      if [ -z "$2" ]
+      then
+          return
+      fi
+
+      if [ -d "$DIRECTORY" ]; then
+        sudo mv "${FILE}" "${DIRECTORY}/"
+      else
+        sudo mkdir "${DIRECTORY}"
+        sudo mv "${FILE}" "${DIRECTORY}/"
+      fi
+
+    }
+
+
+
+
+
+audio=(".mp3" ".wav" ".wma" ".rm" ".ogg" ".mid" ".m4a" ".mpa" ".m3u" ".aif")
+video=(".wmv" ".m4v" ".vob " ".mp4" ".mov" "mkv" ".avi" ".divx" ".mpeg" ".mpg" ".m4p" ".flv" ".webm" ".3gp")
+document=(".docx" ".doc" ".txt" ".xls" ".pdf" ".rtf" ".tex" ".wpd" ".xlsx" ".pptx" ".ppt" ".key" ".pages")
+code=("vbs" "c" "h" "sh" "vb" ".xhtml" ".rb" ".gem" ".rss" ".cpp" ".java" ".php" ".html" ".css" ".py" ".aspx" ".json" ".js" ".jsp" ".do" ".htm" ".cfm" ".xml" ".xaml" ".pl" ".asp" ".fs" ".cs" ".sln")
+images=(".jpg" ".jpeg" ".png" ".tiff" ".gif" ".bmp" ".svg" ".psd" ".tiff")
+data=(".csv" ".dat" ".raw" ".sdf" ".vcf" ".xml")
+database=(".db" ".accdb" ".accdc" ".adb" ".cdb" ".dbc" ".dbf" ".dbs" ".mdb" ".mdf" ".odb" ".sdb" ".sqlite" ".sqlite3" ".sqlitedb" ".xld" ".pdb")
+executable=(".apk" ".exe" ".app" ".bat" ".cgi" ".com" ".gadget" ".jar" ".pif" ".wsf" ".msi" ".bin" ".inf")
+subtitle=(".srt" "sub" ".sbv" ".ifo" ".idx")
+certificate=(".cer" ".cert" ".pem" ".ssl" ".crt" ".csr" ".pfx" ".crl" ".stl")
+shortcuts=(".lnk")
+plugins=(".crx" ".plugin" ".xpi")
+fonts=(".ttf" ".fnt" ".fon" ".otf")
+system=(".cab" ".sys" ".cpl" ".ico" ".drv" ".cur")
+config=(".cfg" ".ini" ".dll")
+archives=(".7z" ".rar" ".zip" ".deb" ".pkg" ".tar.gz")
+disk_images=(".iso" ".dmg" ".vcd" ".mdf")
+backup=(".bak" ".tmp")
+torrents=(".torrent")
+misc=(".crdownload" ".part" ".aup" ".orig" ".g3xp" ".download" "" ".h2song" ".h2pattern")
+
+search_dir=`pwd`
+echo "Path: ${search_dir}"
+for file in "$search_dir"/*
+do
+  #echo "$file"
+ # filename="${file##*/}"
+ # filename="${file/*./}"
+ filename=$(basename "${file}")
+  extension="${file##*.}"
+  
+  if [[ "${extension}" == /* ]]
+    then
+     echo -e "${cyan}$filename ${disable_color} is a directory! ${green}Skipping.${disable_color}"
+     echo "----------------------------------"
+    continue
+  fi
+
+  if echo "${audio[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+      file_type="Audio"
+  else
+    if echo "${video[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+        file_type="Video"
+    else
+      if echo "${document[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then    
+        file_type="Documents"
+      else
+        if echo "${images[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+          file_type="Images"
+        else
+          if echo "${code[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+            file_type="Code"
+          else
+           if echo "${data[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+              file_type="Data"
+           else 
+              if echo "${database[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then  
+                    file_type="Database"
+                else 
+                  if echo "${executable[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                      file_type="Executable"
+                  else 
+                   if echo "${subtitle[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                      file_type="Subtitle"
+                    else 
+                    if echo "${certificate[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                         file_type="Certificate"
+                      else 
+                        if echo "${shortcuts[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                            file_type="Shortcuts"
+                        else 
+                          if echo "${plugins[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                              file_type="Plugins"
+                          else 
+                            if echo "${fonts[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                file_type="Fonts"
+                            else 
+                              if echo "${system[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                  file_type="System"
+                              else 
+                                if echo "${config[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                    file_type="Config"
+                                else 
+                                  if echo "${archives[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                      file_type="Archives"
+                                  else 
+                                    if echo "${disk_images[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                        file_type="DiskImages"
+                                    else
+                                      if echo "${backup[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                          file_type="Backup"
+                                      else 
+                                        if echo "${torrents[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                            file_type="Torrents"
+                                        else
+                                          if echo "${misc[@]}" | fgrep --ignore-case -q --word-regexp "$extension"; then
+                                              file_type="Misc"
+                                          fi 
+                                        fi
+                                      fi
+                                    fi
+                                  fi
+                                fi
+                              fi
+                            fi
+                          fi
+                        fi
+                      fi
+                    fi
+                  fi
+                fi
+              fi
+            fi
+          fi
+        fi
+      fi
+    fi
+
+
+    
+    echo -e "${green}Cleaning ${cyan}$filename${disable_color}"
+    if [ "$filename" == 'cleanit'* ]
+      then
+        echo "----------------------------------"
+        continue;
+    fi
+
+
+      cleanup $file_type "${filename}"
+
+    echo "----------------------------------"
+done
+
+
+    
